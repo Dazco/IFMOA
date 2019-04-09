@@ -1,0 +1,25 @@
+.btn-link{
+    cursor: pointer;
+}
+.chat{
+    height:100%;
+    width: 300px;
+    position: fixed;
+    top: 0;
+    right: 10px;
+    overflow-y: auto;
+    background-image: url('/images/background.png');
+    color: black !important;
+}
+.chat .card-header,.chat .card-body,.chat .card-footer{
+    background-color: inherit;
+}
+.chat .card-body .time{
+    font-size: 80%;
+}
+.chat .card-footer{
+}
+.thread:hover,.user:hover{
+    background-color: rgba(0,0,0,0.1);
+    transition: all ease 0.4s;
+}
