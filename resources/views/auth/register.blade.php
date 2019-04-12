@@ -14,9 +14,9 @@
                     <div class="banner-content text-center">
                         <div class="header-bottom">
                             <div class="layer2 wow zoomIn" data-wow-duration="1s" data-wow-delay=".4s">
-                                <h1 class="">Membership Registeration</h1>
+                                <h1 class="">Membership Registration</h1>
                                 <span>HOME &nbsp; <i
-                                            class="fa fa-caret-right"></i> &nbsp; Membership Registeration</span>
+                                            class="fa fa-caret-right"></i> &nbsp; Membership Registration</span>
                             </div>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
             <div class="col-md-12">
                 <div class="reg-form">
                     <div class="card">
-                        <h3 class="card-header">Membership Registeration Form</h3>
+                        <h3 class="card-header">Membership Registration Form</h3>
                         <div class="card-body">
                             <h5 class="card-title"></h5>
                             <hr>
@@ -173,7 +173,7 @@
                                         <div class="form-group pb-5">
                                             <a class="btn btn-success col-sm-3 float-right" data-toggle="tab"
                                                href="#nav-qualifications"
-                                               onclick="tabNext('#nav-qualifications-tab')">Next</a>
+                                               id="nav-qualifications-toggle">Next</a>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="nav-qualifications" role="tabpanel"
@@ -253,7 +253,7 @@
                                         <div class="form-group pb-5">
                                             <a class="btn btn-success col-sm-3 float-right" data-toggle="tab"
                                                href="#nav-employment"
-                                               onclick="tabNext('#nav-employment-tab')">Next</a>
+                                               id="nav-employment-toggle">Next</a>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="nav-employment" role="tabpanel"
@@ -307,7 +307,7 @@
                                         <div class="form-group pb-sm-5">
                                             <a class="btn btn-success float-right col-sm-3" data-toggle="tab"
                                                href="#nav-referee"
-                                               onclick="tabNext('#nav-referee-tab')">Next</a>
+                                               id="nav-referee-toggle">Next</a>
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="nav-referee" role="tabpanel"
@@ -343,7 +343,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group pb-sm-5">
-                                            <input type="submit" value="Submit" class="btn btn-danger float-right col-sm-3">
+                                            <input type="submit" value="Submit" class="btn btn-danger float-right col-sm-3" id="form-submit">
                                         </div>
                                     </div>
                                 </div>
@@ -428,6 +428,24 @@
                         $('#countries').append(`<option value=${country.name}>`);
                 })
             })
-        }
+        };
+
+        $(document).ready(function(){
+            $(document).on('click','#nav-qualifications-toggle',()=>{
+                // doValidation();
+                tabNext('#nav-qualifications-tab');
+            });
+            $(document).on('click','#nav-employment-toggle',()=>{
+                // doQualValidation();
+                tabNext('#nav-employment-tab');
+            });
+            $(document).on('click','#nav-referee-toggle',()=>{
+                // doEmployValidation();
+                tabNext('#nav-referee-tab')
+            });
+            $(document).on('click','#form-submit',()=>{
+                // doRefvalidation();
+            });
+        });
     </script>
 @endsection

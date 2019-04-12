@@ -1,6 +1,19 @@
-/*-------------------------
-    Custom Js
-    --------------------------- */
+function tabNext(tab){
+    $(tab).click();
+    $('html, body').animate({ scrollTop: 300 }, 'slow');
+}
+function removeQual(input) {
+    input.parent().parent().prev().children('td:last-child').html('<a class="btn btn-danger text-white remove" onclick="removeQual($(this))">Remove</a>')
+    input.parent().parent().remove();
+    acadCounter--;
+}
+
+function removeEmp(input) {
+    input.parent().parent().prev().children('td:last-child').html('<a class="btn btn-danger text-white remove" onclick="removeEmp($(this))">Remove</a>')
+    input.parent().parent().remove();
+    empCounter--;
+}
+
 function readURL(input,img) {
     var fileTypes = ['jpg', 'jpeg', 'png'];  //acceptable file types
     if (input.files && input.files[0]) {
@@ -233,156 +246,4 @@ function revertURL(img,src) {
             }
         });
     }
-
-    /*Register*/
-    var emailExp;
-    var genInfoError;
-    var qualError;
-    var employError;
-    var refError;
-    var newRow;
-    var acadCounter;
-    var empCounter;
-
-// this is for the general infomation error
-    function ifEmpty(input){
-        if($(input).val() == ""){
-            $(input).parent().parent().parent().prepend("<div class='validation'>"+"This field is reqiured"+"</div>");
-            genInfoError = true;
-        }
-    }
-
-    function doValidation(){
-        genInfoError = false;
-        $("#nav-general-information .validation").remove();
-        ifEmpty("#surname");
-        ifEmpty("#firstname");
-        ifEmpty("#othernames");
-        ifEmpty("#address");
-        ifEmpty("#phone");
-        ifEmpty("#register-email");
-        ifEmpty("#date-of-birth");
-        ifEmpty("#nationality");
-        ifEmpty("#state-of-origin");
-        ifEmpty("#company-name");
-        ifEmpty("#company-address");
-        ifEmpty("#job-title");
-        ifEmpty("#nature-of-work");
-
-        if((!$.isNumeric($("#phone").val()) || $("#phone").val().length != 11) && $("#phone").val() != "" ){
-            $("#phone").parent().parent().parent().prepend("<div class='validation'>"+"Please input a valid phone no"+"</div>");
-            genInfoError = true;
-        }
-
-        {
-            emailExp = /^[^\s()<>@,;:\/]+@\w[\w\.-]+\.[a-z]{2,}$/i;
-            if(!emailExp.test($("#register-email").val()) && $("#register-email").val() != "" ){
-                $("#register-email").parent().parent().parent().prepend("<div class='validation'>"+"Please input a valid email"+"</div>");
-                genInfoError = true;
-            }
-        }
-
-        if(genInfoError == true){
-            $(".validation").css("display","block");
-        }
-    }
-
-
-// this is for qualifications errors
-    function doQualValidation(){
-        qualError = false;
-        for(var i = 1;i<acadCounter; i++){
-            if($("#institute"+i).val() == "" || $("#certificate"+i).val() == "" || $("#year"+i).val() == "" ){
-                $("#qualError").html("all three fields are required");
-                qualError = true;
-                tabNext("#");
-                break;
-            }else{
-                $("#qualError").html("");
-            }
-        }
-    }
-
-// this is for employment validation
-    function doEmployValidation(){
-        employError = false;
-        for(var i = 1;i<empCounter; i++){
-            if($("#organization"+i).val() == "" || $("#position"+i).val() == "" || $("#date_from"+i).val() == "" || $("#date_to"+i).val() == ""
-                || $("#responsibilities"+i).val() == ""){
-                $("#employError").html("all fields are required");
-                qualError = true;
-                tabNext("#");
-                break;
-            }else{
-                $("#employError").html("");
-            }
-        }
-    }
-
-// this is for referee validation
-
-    function ifRefEmpty(input){
-        if($(input).val() == ""){
-            $(input).parent().parent().parent().prepend("<div class='validation'>"+"This field is reqiured"+"</div>");
-            refError = true;
-        }
-    }
-    function doRefvalidation(){
-        refError = false;
-
-        // do its validation itself
-        $("#nav-referee .validation").remove();
-        ifRefEmpty("#referee");
-        ifRefEmpty("#referee_address");
-        ifRefEmpty("#referee_phone");
-        ifRefEmpty("#referee-email");
-
-        if((!$.isNumeric($("#referee_phone").val()) || $("#referee_phone").val().length != 11) && $("#referee_phone").val() != "" ){
-            $("#referee_phone").parent().parent().parent().prepend("<div class='validation'>"+"Please input a valid phone no"+"</div>");
-            refError = true;
-        }
-
-
-        {
-            emailExp = /^[^\s()<>@,;:\/]+@\w[\w\.-]+\.[a-z]{2,}$/i;
-            if(!emailExp.test($("#referee-email").val()) && $("#referee-email").val() != "" ){
-                $("#referee-email").parent().parent().parent().prepend("<div class='validation'>"+"Please input a valid email"+"</div>");
-                refError = true;
-            }
-        }
-
-        if(refError == true){
-            $(".validation").css("display","block");
-        }
-
-        //redo all validation first
-        doValidation();
-        doQualValidation();
-        doEmployValidation();
-
-        if(genInfoError == false && refError == false && employError == false){
-            $("form").submit()
-        }else{
-            e.preventDefault();
-            return false;
-
-        }
-    }
-
-    function tabNext(tab){
-        $(tab).click();
-        $('html, body').animate({ scrollTop: 300 }, 'slow');
-    }
-    function removeQual(input) {
-        input.parent().parent().prev().children('td:last-child').html('<a class="btn btn-danger text-white remove" onclick="removeQual($(this))">Remove</a>')
-        input.parent().parent().remove();
-        acadCounter--;
-    }
-
-    function removeEmp(input) {
-        input.parent().parent().prev().children('td:last-child').html('<a class="btn btn-danger text-white remove" onclick="removeEmp($(this))">Remove</a>')
-        input.parent().parent().remove();
-        empCounter--;
-    }
-
 })(jQuery);
