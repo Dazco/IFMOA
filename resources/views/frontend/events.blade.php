@@ -17,13 +17,13 @@
                                             <a href="{{route('event.show',$event->slug)}}#disqus_thread">Join the discussion</a>
                                         </span>
                         <span class="date-type">
-                                                <i class="fa fa-calendar"></i>{{\Illuminate\Support\Carbon::create($event->datetime)->diffForHumans()}}
+                                                <i class="fa fa-calendar"></i>{{$event->start_date}}
                                             </span>
                         <span class="comments-type">
                                             <i class="fas fa-location-arrow"></i>
                                             <a href="{{route('event.show',$event->slug)}}#disqus_thread">{{$event->location}}</a>
                                         </span>
-                        <span class="date-type">
+                        <span class="date-type"></span>
                     </div>
                     <div class="blog-text">
                         <h4>

@@ -126,6 +126,20 @@
                 </div>
             </div>
         </li>
+        <!-- Nav Item - E-library Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#downloads_collapse" aria-expanded="true" aria-controls="downloads_collapse">
+                <i class="fa fa-fw fa-book-open"></i>
+                <span>Downloads</span>
+            </a>
+            <div id="downloads_collapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Public Downloads:</h6>
+                    <a class="collapse-item" href="{{route('admin.downloads.index')}}"><i class="fa fa-fw fa-book-open"></i> All Documents</a>
+                    <a class="collapse-item" href="{{route('admin.downloads.create')}}"><i class="fa fa-fw fa-upload"></i> Upload Document</a>
+                </div>
+            </div>
+        </li>
         <!-- Nav Item - Payments Collapse Menu -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#payments_collapse" aria-expanded="true" aria-controls="payments_collapse">

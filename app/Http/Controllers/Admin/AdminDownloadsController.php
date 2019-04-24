@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\ELibrary;
-use App\Notifications\ElibraryUploaded;
+use App\Download;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -12,7 +11,7 @@ use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
-class AdminELibraryController extends Controller
+class AdminDownloadsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,8 +21,8 @@ class AdminELibraryController extends Controller
     public function index()
     {
         //
-        $eLibrary = ELibrary::all();
-        return view('admin.eLibrary.index',compact('eLibrary'));
+        $downloads = Download::all();
+        return view('admin.downloads.index',compact('downloads'));
     }
 
     /**
@@ -34,7 +33,7 @@ class AdminELibraryController extends Controller
     public function create()
     {
         //
-        return view('admin.eLibrary.create');
+        return view('admin.downloads.create');
     }
 
     /**
@@ -55,17 +54,16 @@ class AdminELibraryController extends Controller
         if($request->hasFile('resource') && $request->file('resource')->isValid()){
             $file = $request->file('resource');
             $filename = $data['title'] . '_' . time().'.'.$file->extension();
-            $path = $file->storePubliclyAs('public/uploads/eLibrary',$filename);
+            $path = $file->storePubliclyAs('public/uploads/downloads',$filename);
 
             $data['path'] = $path;
         }
-        $eLibrary = Auth::user()->eLibrary()->create($data);
+        $download = Auth::user()->downloads()->create($data);
 
-        Session::flash('alert-success',"The eLibrary resource '$eLibrary->title' has been uploaded successfully");
+        Session::flash('alert-success',"The Document '$download->title' has been uploaded successfully");
         $members = User::where('is_active',1)->get()->all();
-        Notification::send($members,new ElibraryUploaded($eLibrary));
 
-        return redirect('admin/eLibrary');
+        return redirect('admin/downloads');
     }
 
     /**
@@ -88,8 +86,8 @@ class AdminELibraryController extends Controller
     public function edit($id)
     {
         //
-        $eLibrary = ELibrary::findOrFail($id);
-        return view('admin.eLibrary.edit',compact('eLibrary'));
+        $download = Download::findOrFail($id);
+        return view('admin.downloads.edit',compact('download'));
     }
 
     /**
@@ -109,24 +107,24 @@ class AdminELibraryController extends Controller
             'resource' => 'file|mimes:pdf,doc,docx,xls,xlm,xla,xlc,xlt,xlw,ppt,pps,pot'
         ]);
 
-        $eLibrary = ELibrary::findOrFail($id);
+        $download = Download::findOrFail($id);
 
         /*Photo*/
         if($request->hasFile('resource') && $request->file('resource')->isValid()){
             $file = $request->file('resource');
             $filename = $data['title'] . '_' . time().'.'.$file->extension();
-            $path = $file->storePubliclyAs('public/uploads/eLibrary',$filename);
-            if($eLibrary->path) {
-                if (Storage::exists($eLibrary->path)) Storage::delete($eLibrary->path);
+            $path = $file->storePubliclyAs('public/uploads/downloads',$filename);
+            if($download->path) {
+                if (Storage::exists($download->path)) Storage::delete($download->path);
             }
             $data['path'] = $path;
         }
-        if($eLibrary->update($data)){
-            Session::flash('alert-success',"The E-Library resource '$eLibrary->title' has been updated");
+        if($download->update($data)){
+            Session::flash('alert-success',"The Public document '$download->title' has been updated");
         }else{
-            Session::flash('alert-danger',"The E-Library resource '$eLibrary->title' could not be updated. Please contact support.");
+            Session::flash('alert-danger',"The public document '$download->title' could not be updated. Please contact support.");
         }
-        return redirect('admin/eLibrary');
+        return redirect('admin/downloads');
     }
 
     /**
@@ -138,21 +136,22 @@ class AdminELibraryController extends Controller
     public function destroy($id)
     {
         //
-        $eLibrary = ELibrary::findOrFail($id);
-        if($eLibrary->path) {
-            if (Storage::exists($eLibrary->path)) Storage::delete($eLibrary->path);
+        $download = Download::findOrFail($id);
+        if($download->path) {
+            if (Storage::exists($download->path)) Storage::delete($download->path);
         }
-        if($eLibrary->delete()){
-            Session::flash('alert-danger',"The E-Library resource '$eLibrary->title' has been deleted");
+        if($download->delete()){
+            Session::flash('alert-danger',"The Public Document '$download->title' has been deleted");
         }
-        return redirect('/admin/eLibrary');
+        return redirect('/admin/downloads');
     }
     public function download($id){
-        $eLibrary = ELibrary::findOrFail($id);
-        if(Storage::exists($eLibrary->path)){
-            return Storage::download($eLibrary->path);
+        $download = Download::findOrFail($id);
+        dd($download);
+        if(Storage::exists($download->path)){
+            return Storage::download($download->path);
         }
-        Session::flash('alert-danger',"The E-Library resource '$eLibrary->title' could not be found");
+        Session::flash('alert-danger',"The Public Document '$download->title' could not be found");
         return redirect()->back();
     }
 }

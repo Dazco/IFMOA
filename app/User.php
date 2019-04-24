@@ -61,6 +61,9 @@ class User extends Authenticatable
     public function eLibrary(){
         return $this->hasMany('App\ELibrary');
     }
+    public function downloads(){
+        return $this->hasMany('App\Download');
+    }
     public function news(){
         return $this->hasMany('App\News');
     }

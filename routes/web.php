@@ -15,6 +15,7 @@
 /*Frontend Routes*/
 Route::get('/', 'FrontendController@index')->name('home');
 Route::get('/about','FrontendController@about')->name('about');
+Route::get('/executives','FrontendController@executives')->name('executives');
 Route::get('/register-why','FrontendController@register_why')->name('register-why');
 Route::get('/register-how','FrontendController@register_how')->name('register-how');
 Route::get('/register-benefits','FrontendController@register_benefits')->name('register-benefits');
@@ -32,9 +33,14 @@ Route::get('/news/categories/{category}','FrontendController@news_category')->na
 Route::get('/events','FrontendController@events')->name('events');
 Route::get('/events/{slug}','FrontendController@event')->name('event.show');
 Route::get('/events/categories/{category}','FrontendController@events_category')->name('events.category');
-
+/*Contact Routes*/
 Route::get('/contact','FrontendController@contact')->name('contact');
 Route::post('/contact','FrontendController@sendContact');
+Route::get('/calendar','FrontendController@calendar')->name('calendar');
+/*Downloads Route*/
+Route::get('/downloads','FrontendController@downloads')->name('downloads');
+Route::get('/downloads/{id}','FrontendController@download');
+
 /*End Frontend routes*/
 
 /*Member Routes*/
@@ -78,6 +84,8 @@ Route::middleware(['member','admin'])->namespace('Admin')->prefix('admin')->name
     Route::get('unapproved/members','AdminMembersController@unapproved')->name('members.unapproved');
     Route::get('manage/members/{id}','AdminMembersController@manage')->name('members.manage');
     Route::patch('manage/members/{id}/approve','AdminMembersController@approve')->name('members.manage.approve');
+    Route::resource('downloads','AdminDownloadsController');
+
 });
 /*End Admin Routes*/
 

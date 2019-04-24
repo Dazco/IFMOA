@@ -228,6 +228,12 @@ $(document).ready(()=>{
     });
 
     /*End Chat*/
+    $(document).on('click','.revertUrl',function(){
+        revertURL('#renderImage',"https://via.placeholder.com/500x250");
+    });
+    $(document).on('change','.readUrl',function(){
+        readURL(this,'#renderImage');
+    });
 });
 
 function readURL(input,img) {
@@ -253,3 +259,4 @@ function readURL(input,img) {
 function revertURL(img,src) {
     $(img).attr('src', src)
 }
+

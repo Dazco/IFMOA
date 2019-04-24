@@ -17,14 +17,26 @@
         <figure class="mt-5">
             <img height="250" width="500" src="https://via.placeholder.com/500x250" alt="Image" class="img-responsive" id="renderImage">
         </figure>
-        <a class="btn btn-danger aligncenter text-white mb-3 col-sm-3 text-center btn-link" onclick="revertURL('#renderImage','https://via.placeholder.com/500x250')">Remove</a>
+        <a class="revertUrl btn btn-danger aligncenter text-white mb-3 col-sm-3 text-center btn-link">Remove</a>
         <div class="custom-file mb-3">
             {!! Form::label('photo','Display Image:',['class'=>'custom-file-label']) !!}
-            {!! Form::file('photo',['class'=>'custom-file-input','onchange'=>"readURL(this,'#renderImage')"]) !!}
+            {!! Form::file('photo',['class'=>['custom-file-input','readUrl']]) !!}
         </div>
         <div class="form-group">
-            {!! Form::label('date','Event Date and Time:') !!}
-            <input type="datetime-local" name="datetime" class="form-control" id="datetime" value="{{old('datetime')}}" placeholder="2019-03-06 16:59:00">
+            {!! Form::label('start_date','Event Start Date:') !!}
+            <input type="date" name="start_date" class="form-control" id="start_date" value="{{old('start_date')}}">
+        </div>
+        <div class="form-group">
+            {!! Form::label('start_time','Event Start Time:') !!}
+            <input type="time" name="start_time" class="form-control" id="start_time" value="{{old('start_time')}}">
+        </div>
+        <div class="form-group">
+            {!! Form::label('end_date','Event End Date:') !!}
+            <input type="date" name="end_date" class="form-control" id="end_date" value="{{old('end_date')}}">
+        </div>
+        <div class="form-group">
+            {!! Form::label('end_time','Event End Time:') !!}
+            <input type="time" name="end_time" class="form-control" id="end_time" value="{{old('end_time')}}">
         </div>
         <div class="form-group">
             {!! Form::label('location','Event Location:') !!}

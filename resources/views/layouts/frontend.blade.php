@@ -67,6 +67,7 @@ Top Bar
                 <li class="menu-has-children {{Request::is('about')?'menu-active':''}}"><a href="#">About</a>
                     <ul class="dropbody">
                         <li><a href="{{'about'}}">About IFMOA</a></li>
+                        <li><a href="{{'executives'}}">Executive Members</a></li>
                         <li><a target="_blank" href="https://app.termly.io/document/disclaimer/5e73a2b1-8193-46eb-9ec3-d30a0827752c">Disclaimer</a></li>
                     </ul>
                 </li>
@@ -74,9 +75,10 @@ Top Bar
                     <ul class="dropbody">
                         <li><a href="{{route('register-why')}}">Become a member - Why?</a></li>
                         <li><a href="{{route('register-how')}}">Become a member - How?</a></li>
-                        <li><a href="{{route('register')}}">Membership Registration</a></li>
                         <li><a href="{{route('register-benefits')}}">Membership Benefits</a></li>
                         <li><a href="{{route('register-grade')}}">Membership Grades and Requirements</a></li>
+                        <li><a href="{{route('register')}}">Membership Registration</a></li>
+                        <li><a href="{{route('login')}}">Member Login</a></li>
                     </ul>
                 </li>
                 <li class="menu-has-children {{Request::is('events')||Request::is('news')||Request::is('gallery')?'menu-active':''}}"><a href="#">Media Center</a>
@@ -84,6 +86,8 @@ Top Bar
                         <li><a href="{{route('events')}}">Events</a></li>
                         <li><a href="{{route('news')}}">News</a></li>
                         <li><a href="{{route('gallery')}}">Photo Gallery</a></li>
+                        <li><a href="{{route('calendar')}}">Calendar</a></li>
+                        <li><a href="{{route('downloads')}}">Downloads</a></li>
                     </ul>
                 </li>
                 <li class="{{Request::is('blog')?'menu-active':'menu'}}"><a href="{{route('blog')}}">Blog</a></li>

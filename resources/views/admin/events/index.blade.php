@@ -21,7 +21,8 @@
                             <tr>
                                 <th>S/N</th>
                                 <th><i class="fas fa-book"></i> Event Title</th>
-                                <th><i class="fas fa-calendar-alt"></i> Event date and time</th>
+                                <th><i class="fas fa-calendar-alt"></i> Event Start date and time</th>
+                                <th><i class="fas fa-calendar-alt"></i> Event End date and time</th>
                                 <th><i class="fas fa-user"></i> Event Creator</th>
                                 <th><i class="fas fa-calendar-alt"></i> Event Location</th>
                                 <th><i class="fas fa-tags"></i>Event Category</th>
@@ -35,7 +36,8 @@
                                     <tr>
                                         <td>{{$i}}</td>
                                         <td><a href="{{route('event.show',$events[$i-1]->slug)}}">{{$events[$i-1]->title}}</a></td>
-                                        <td>{{$events[$i-1]->datetime}} ({{\Illuminate\Support\Carbon::create($events[$i-1]->datetime)->diffForHumans()}})</td>
+                                        <td>{{$events[$i-1]->start_date}} ({{$events[$i-1]->start_time}})</td>
+                                        <td>{{$events[$i-1]->end_date}} ({{$events[$i-1]->end_time}})</td>
                                         <td>{{$events[$i-1]->user->name}}</td>
                                         <td>{{$events[$i-1]->location}}</td>
                                         <td>{{$events[$i-1]->category->name}}</td>

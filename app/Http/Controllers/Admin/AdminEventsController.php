@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class AdminEventsController extends Controller
 {
@@ -23,7 +24,8 @@ class AdminEventsController extends Controller
     public function index()
     {
         //
-        $events = Event::all();
+        $now = new Carbon();
+        $events = Event::where('end_date','>',$now)->get();
         return view('admin.events.index',compact('events'));
     }
 
@@ -53,7 +55,10 @@ class AdminEventsController extends Controller
             'title' => 'required|max:255',
             'photo' => 'required|image',
             'description' => 'required',
-            'datetime' => 'required|date',
+            'start_date' => 'required|date',
+            'start_time' => 'required',
+            'end_date' => 'required|date',
+            'end_time' => 'required',
             'location' => 'required',
             'category_id' => 'required_without:new_category',
             'new_category' => 'required_without:category_id',
@@ -71,8 +76,15 @@ class AdminEventsController extends Controller
             $data['category_id'] = $category->id;
         }
         $event = Auth::user()->events()->create($data);
+        $calendar_event = \Spatie\GoogleCalendar\Event::create([
+            'name' => $event->title,
+            'startDateTime' => $event->startDateTime,
+            'endDateTime' => $event->endDateTime,
+        ]);
+        $event->event_id = $calendar_event->id;
+        $event->save();
 
-        /*Photo*/
+                   /*Photo*/
         if($request->hasFile('photo') && $request->file('photo')->isValid()){
             $file = $request->file('photo');
             $path = $file->storePublicly('public/uploads/images/events');
@@ -82,7 +94,7 @@ class AdminEventsController extends Controller
         Session::flash('alert-success',"The Event '$event->title' has been created");
 
         $members = User::where('is_active',1)->get()->all();
-        Notification::send($members,new EventCreated($post));
+        Notification::send($members,new EventCreated($event));
 
         return redirect('admin/events');
     }
@@ -126,7 +138,10 @@ class AdminEventsController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
-            'datetime' => 'required|date',
+            'start_date' => 'required|date',
+            'start_time' => 'required',
+            'end_date' => 'required|date',
+            'end_time' => 'required',
             'location' => 'required',
             'category_id' => 'required_without:new_category',
             'new_category' => 'required_without:category_id',
@@ -156,6 +171,11 @@ class AdminEventsController extends Controller
             $event->photo()->update(['path'=>$path]);
         }
         if($event->update($data)){
+            \Spatie\GoogleCalendar\Event::find($event->event_id)->update([
+                'name' => $event->title,
+                'startDateTime' => $event->startDateTime,
+                'endDateTime' => $event->endDateTime,
+            ]);
             Session::flash('alert-success',"The Event '$event->title' has been updated");
         }else{
             Session::flash('alert-danger',"The Event '$event->title' could not be updated. Please contact support.");
@@ -173,6 +193,7 @@ class AdminEventsController extends Controller
     {
         //
         $event = Event::findOrFail($id);
+        \Spatie\GoogleCalendar\Event::find($event->event_id)->delete();
         if($event->photo) {
             if (Storage::exists($event->photo->path)) Storage::delete($event->photo->path);
         }

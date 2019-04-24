@@ -11,7 +11,7 @@
                 <h2>{{$event->title}}</h2>
                 <div class="entry-meta">
                     <span class="author-meta"><i class="fa fa-user"></i> <a href="#">{{$event->user->name}}</a></span>
-                    <span><i class="fa fa-clock-o"></i> {{\Illuminate\Support\Carbon::create($event->datetime)->diffForHumans()}}</span>
+                    <span><i class="fa fa-clock-o"></i> {{$event->start_date}}</span>
                     <span><i class="fa fa-location-arrow"></i> {{$event->location}}</span>
                     <span class="tag-meta">
                         <i class="fa fa-folder-o"></i>

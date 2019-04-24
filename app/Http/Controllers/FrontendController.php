@@ -8,8 +8,11 @@ use App\Mail\Contact;
 use App\Media;
 use App\News;
 use App\Post;
+use App\Download;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class FrontendController extends Controller
 {
@@ -22,6 +25,12 @@ class FrontendController extends Controller
     /*About Section*/
     public function about(){
         return view('frontend.about');
+    }
+    public function executives(){
+        return view('frontend.executives');
+    }
+    public function calendar(){
+        return view('frontend.calendar');
     }
     /*Registration Section*/
     public function register_why(){
@@ -118,4 +127,16 @@ class FrontendController extends Controller
         ));
     }
 
+    public function downloads(){
+        $downloads = Download::all();
+        return view('frontend.downloads',compact('downloads'));
+    }
+    public function download($id){
+        $download = Download::findOrFail($id);
+        if(Storage::exists($download->path)){
+            return Storage::download($download->path);
+        }
+        Session::flash('alert-danger',"The Public Document '$download->title' could not be found");
+        return redirect()->back();
+    }
 }

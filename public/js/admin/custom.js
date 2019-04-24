@@ -10446,6 +10446,13 @@ $(document).ready(function () {
     getUsers(name);
   });
   /*End Chat*/
+
+  $(document).on('click', '.revertUrl', function () {
+    revertURL('#renderImage', $(this).data('image'));
+  });
+  $(document).on('change', '.readUrl', function () {
+    readURL(this, '#renderImage');
+  });
 });
 
 function readURL(input, img) {

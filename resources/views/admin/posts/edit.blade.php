@@ -17,10 +17,10 @@
         <figure class="mt-5">
             <img height="250" width="500" src="{{$post->image}}" alt="Image" class="img-responsive" id="renderImage">
         </figure>
-        <a class="btn btn-danger aligncenter text-white mb-3 col-sm-3 text-center btn-link" onclick="revertURL('#renderImage','https://via.placeholder.com/500x250')">Remove</a>
+        <a class="revertUrl btn btn-danger aligncenter text-white mb-3 col-sm-3 text-center btn-link">Remove</a>
         <div class="custom-file mb-3">
             {!! Form::label('photo','Display Image:',['class'=>'custom-file-label']) !!}
-            {!! Form::file('photo',['class'=>'custom-file-input','onchange'=>"readURL(this,'#renderImage')"]) !!}
+            {!! Form::file('photo',['class'=>['custom-file-input','readUrl']]) !!}
         </div>
         <div class="form-group">
             {!! Form::label('description','Description:') !!}
